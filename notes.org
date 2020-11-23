@@ -1,8 +1,10 @@
 * Tasks
 ** DONE Move universe construction inside the LiveView
    CLOSED: [2020-11-21 Sat 16:55]
-** TODO Move hooks into their own Javascript file
+** DONE Import universe generation from Cargo
+   CLOSED: [2020-11-23 Mon 11:34]
 ** TODO Draw warp lines on the map
-** TODO Draw wormholes on the map
 ** TODO Support scolling the map
+** TODO Draw wormholes on the map
 ** TODO Support scaling the map
+** TODO Move hooks into their own Javascript file

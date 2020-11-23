@@ -54,42 +54,74 @@ Hooks.Map = {
         ctx.translate(1, halfHexSide);
 
         const universe = JSON.parse(canvas.dataset.universe);
+        const xShift = -universe.min_x;
+        const yShift = -universe.min_y;
 
         // Early scaling work:
-        // const universeSize = Math.ceil(
-        //   100 * maxSectorSize + sectorCenter + halfHexSide
-        // );
-        // const minScale = canvas.height / universeSize;
-        // ctx.scale(minScale, minScale);
+        const universeSize = Math.ceil(
+          100 * maxSectorSize + sectorCenter + halfHexSide
+        );
+        const minScale = canvas.height / universeSize;
+        ctx.scale(minScale, minScale);
 
-        for (var y = 0; y < 100; y++) {
-            for (var x = 0; x < 100; x++) {
-                var offset = 0;
-                if (y % 2 === 1) {
-                    offset = sectorCenter;
-                }
+        for (var sector of universe.sectors) {
+            var x = sector.coordinates[0] + xShift;
+            var y = sector.coordinates[1] + yShift;
+            // console.log([x, y]);
+            var offset = 0;
+            if (y % 2 === 1) {
+                offset = sectorCenter;
+            }
 
-                ctx.beginPath();
-                ctx.moveTo(
-                    offset + x * maxSectorSize + hexPointOffsets[0][0],
-                    y * maxSectorSize + hexPointOffsets[0][1]
-                );
-                for (var i = 1; i < hexPointOffsets.length; i++) {
-                    ctx.lineTo(
-                        offset + x * maxSectorSize + hexPointOffsets[i][0],
-                        y * maxSectorSize + hexPointOffsets[i][1]
-                    );
-                }
-                ctx.closePath();
-                ctx.stroke();
-
-                ctx.fillText(
-                    universe[y][x],
-                    offset + x * maxSectorSize + sectorCenter,
-                    y * maxSectorSize + sectorCenter
+            ctx.beginPath();
+            ctx.moveTo(
+                offset + x * maxSectorSize + hexPointOffsets[0][0],
+                y * maxSectorSize + hexPointOffsets[0][1]
+            );
+            for (var i = 1; i < hexPointOffsets.length; i++) {
+                ctx.lineTo(
+                    offset + x * maxSectorSize + hexPointOffsets[i][0],
+                    y * maxSectorSize + hexPointOffsets[i][1]
                 );
             }
+            ctx.closePath();
+            ctx.stroke();
+
+            ctx.fillText(
+                sector.number,
+                offset + x * maxSectorSize + sectorCenter,
+                y * maxSectorSize + sectorCenter
+            );
         }
+
+        // for (var y = 0; y < 100; y++) {
+        //     for (var x = 0; x < 100; x++) {
+        //         var offset = 0;
+        //         if (y % 2 === 1) {
+        //             offset = sectorCenter;
+        //         }
+
+        //         ctx.beginPath();
+        //         ctx.moveTo(
+        //             offset + x * maxSectorSize + hexPointOffsets[0][0],
+        //             y * maxSectorSize + hexPointOffsets[0][1]
+        //         );
+        //         for (var i = 1; i < hexPointOffsets.length; i++) {
+        //             ctx.lineTo(
+        //                 offset + x * maxSectorSize + hexPointOffsets[i][0],
+        //                 y * maxSectorSize + hexPointOffsets[i][1]
+        //             );
+        //         }
+        //         ctx.closePath();
+        //         ctx.stroke();
+
+        //         ctx.fillText(
+        //             universe[y][x],
+        //             offset + x * maxSectorSize + sectorCenter,
+        //             y * maxSectorSize + sectorCenter
+        //         );
+        //     }
+        // }
     }
 };
 
