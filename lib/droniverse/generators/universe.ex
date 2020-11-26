@@ -204,8 +204,10 @@ defmodule Droniverse.Generators.Universe do
       coordinate_index: coordinate_index,
       min_x: min_x,
       max_x: max_x,
+      x_range: max_x - min_x + 1,
       min_y: min_y,
-      max_y: max_y
+      max_y: max_y,
+      y_range: max_y - min_y + 1
     )
   end
 end

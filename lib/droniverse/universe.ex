@@ -4,8 +4,10 @@ defmodule Droniverse.Universe do
             coordinate_index: nil,
             min_x: nil,
             min_y: nil,
+            x_range: nil,
             max_x: nil,
-            max_y: nil
+            max_y: nil,
+            y_range: nil
 
   def new(fields) do
     struct!(__MODULE__, fields)

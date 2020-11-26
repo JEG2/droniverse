@@ -1,1 +1,1 @@
-<canvas id="map" width="800" height="600" data-universe="<%= to_data(@universe) %>" phx-hook="Map"></canvas>
+<canvas id="map" width="800" height="600" data-universe="<%= to_data(@universe) %>" data-view-x="<%= @view_x %>" data-view-y="<%= @view_y %>" phx-hook="Map" phx-window-keydown="react_to_key_down" phx-window-keyup="react_to_key_up"></canvas>

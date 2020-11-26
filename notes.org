@@ -4,7 +4,15 @@
 ** DONE Import universe generation from Cargo
    CLOSED: [2020-11-23 Mon 11:34]
 ** TODO Draw warp lines on the map
-** TODO Support scolling the map
+** DONE Support scolling the map
+   CLOSED: [2020-11-26 Thu 12:12]
+** DONE Add a faster scroll speed
+   CLOSED: [2020-11-26 Thu 14:41]
+** DONE Center on points
+   CLOSED: [2020-11-26 Thu 15:04]
+** TODO Make hexes optional
 ** TODO Draw wormholes on the map
 ** TODO Support scaling the map
-** TODO Move hooks into their own Javascript file
+** TODO Do a full redraw on update when needed
+** DONE Move hooks into their own Javascript file
+   CLOSED: [2020-11-24 Tue 10:52]
