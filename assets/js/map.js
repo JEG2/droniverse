@@ -97,35 +97,55 @@ let Map = {
         this.ctx.translate(-viewX * this.sizes.sector,
                            -viewY * this.sizes.sector);
 
-        for (var sector of this.sectors) {
+        for (var number in this.sectors) {
+            var sector = this.sectors[number];
             var x = sector.coordinates[0] + this.offsets.xCoordinate;
             var y = sector.coordinates[1] + this.offsets.yCoordinate;
             var hexRowOffset = 0;
-            if (y % 2 === 1) {
+            if (Math.abs(sector.coordinates[1]) % 2 === 1) {
                 hexRowOffset = this.sizes.halfSector;
             }
 
-            this.ctx.beginPath();
-            this.ctx.moveTo(
-                hexRowOffset + x * this.sizes.sector +
-                    this.offsets.hexPoints[0][0],
-                y * this.sizes.sector + this.offsets.hexPoints[0][1]
-            );
-            for (var i = 1; i < this.offsets.hexPoints.length; i++) {
-                this.ctx.lineTo(
-                    hexRowOffset + x * this.sizes.sector +
-                        this.offsets.hexPoints[i][0],
-                    y * this.sizes.sector + this.offsets.hexPoints[i][1]
-                );
-            }
-            this.ctx.closePath();
-            this.ctx.stroke();
+            // this.ctx.beginPath();
+            // this.ctx.moveTo(
+            //     hexRowOffset + x * this.sizes.sector +
+            //         this.offsets.hexPoints[0][0],
+            //     y * this.sizes.sector + this.offsets.hexPoints[0][1]
+            // );
+            // for (var i = 1; i < this.offsets.hexPoints.length; i++) {
+            //     this.ctx.lineTo(
+            //         hexRowOffset + x * this.sizes.sector +
+            //             this.offsets.hexPoints[i][0],
+            //         y * this.sizes.sector + this.offsets.hexPoints[i][1]
+            //     );
+            // }
+            // this.ctx.closePath();
+            // this.ctx.stroke();
 
-            this.ctx.fillText(
-                sector.number,
-                hexRowOffset + x * this.sizes.sector + this.sizes.halfSector,
-                y * this.sizes.sector + this.sizes.halfSector
-            );
+            var centerX = hexRowOffset + x * this.sizes.sector +
+                          this.sizes.halfSector;
+            var centerY = y * this.sizes.sector + this.sizes.halfSector;
+            this.ctx.fillText(sector.number, centerX, centerY);
+
+            this.ctx.save();
+            this.ctx.strokeStyle = "#999";
+            for (var toNumber of sector.connections) {
+                var to = this.sectors[toNumber.toString()];
+                var toX = to.coordinates[0] + this.offsets.xCoordinate;
+                var toY = to.coordinates[1] + this.offsets.yCoordinate;
+                var toCenterX = toX * this.sizes.sector +
+                                this.sizes.halfSector;
+                var toCenterY = toY * this.sizes.sector +
+                                this.sizes.halfSector;
+                if (Math.abs(to.coordinates[1]) % 2 === 1) {
+                    toCenterX = toCenterX + this.sizes.halfSector;
+                }
+                this.ctx.beginPath();
+                this.ctx.moveTo(centerX, centerY);
+                this.ctx.lineTo(toCenterX, toCenterY);
+                this.ctx.stroke();
+            }
+            this.ctx.restore();
         }
 
         this.ctx.restore();

@@ -101,7 +101,11 @@ defmodule Droniverse.Generators.Universe do
         big_bang.config.sector_count - map_size(big_bang.sectors)
       ])
 
-    [{1, -1}, {1, 0}, {1, 1}, {-1, 1}, {-1, 0}, {-1, -1}]
+    if rem(y, 2) == 0 do
+      [{0, -1}, {1, 0}, {0, 1}, {-1, 1}, {-1, 0}, {-1, -1}]
+    else
+      [{1, -1}, {1, 0}, {1, 1}, {0, 1}, {-1, 0}, {0, -1}]
+    end
     |> Enum.map(fn {x_offset, y_offset} -> {x + x_offset, y + y_offset} end)
     |> Enum.filter(fn {x, y} ->
       x >= big_bang.config.min_x_coordinate and
@@ -116,12 +120,16 @@ defmodule Droniverse.Generators.Universe do
       |> Map.get(Map.get(big_bang.used_coordinates, coordinates))
       |> case do
         %Sector{} = existing_sector ->
-          sectors =
-            big_bang.sectors
-            |> connect_sectors(sector.number, existing_sector.number)
-            |> connect_sectors(existing_sector.number, sector.number)
+          if length(existing_sector.connections) < 6 do
+            sectors =
+              big_bang.sectors
+              |> connect_sectors(sector.number, existing_sector.number)
+              |> connect_sectors(existing_sector.number, sector.number)
 
-          %__MODULE__{big_bang | sectors: sectors}
+            %__MODULE__{big_bang | sectors: sectors}
+          else
+            big_bang
+          end
 
         nil ->
           add_sector(

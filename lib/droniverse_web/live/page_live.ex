@@ -62,8 +62,8 @@ defmodule DroniverseWeb.PageLive do
     |> Map.delete(:coordinate_index)
     |> Map.put(
       :sectors,
-      Enum.map(universe.sectors, fn {_number, sector} ->
-        to_data(sector)
+      Enum.into(universe.sectors, Map.new(), fn {number, sector} ->
+        {to_string(number), to_data(sector)}
       end)
     )
     |> Jason.encode!()

@@ -3,7 +3,8 @@
    CLOSED: [2020-11-21 Sat 16:55]
 ** DONE Import universe generation from Cargo
    CLOSED: [2020-11-23 Mon 11:34]
-** TODO Draw warp lines on the map
+** DONE Draw warp lines on the map
+   CLOSED: [2020-11-30 Mon 21:24]
 ** DONE Support scolling the map
    CLOSED: [2020-11-26 Thu 12:12]
 ** DONE Add a faster scroll speed
